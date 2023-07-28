@@ -60,7 +60,7 @@ const client = new Client({
   // proxyAuthentication: { username: 'username', password: 'password' },
   puppeteer: {
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    headless: false,
+    headless: true,
   },
 });
 
