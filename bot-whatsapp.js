@@ -7,9 +7,11 @@ const {
   MessageMedia,
 } = require("whatsapp-web.js");
 const axios = require("axios");
+const qrcode = require("qrcode-terminal");
+
 const schedule = require("node-schedule");
 
-const apiKey = "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";
+const apiKey = "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";
 
 const googleApiKey = "AIzaSyDMZR955arBhnR7ed8yERFvGOAU6T_J7WQ";
 const customSearchEngineId = "6428925d640044db8";
@@ -57,9 +59,9 @@ const client = new Client({
   authStrategy: new LocalAuth(),
   // proxyAuthentication: { username: 'username', password: 'password' },
   puppeteer: {
-    args: [
-      "--proxy-server=proxy-server-that-requires-authentication.example.com",
-    ],
+    // args: [
+    //   "--proxy-server=proxy-server-that-requires-authentication.example.com",
+    // ],
     headless: true,
   },
 });
@@ -71,6 +73,9 @@ client.on("loading_screen", (percent, message) => {
 });
 
 client.on("qr", (qr) => {
+  qrcode.generate(qr, { small: true }, (qrCode) => {
+    console.log(qrCode);
+  });
   console.log("QR RECEIVED", qr);
 });
 
@@ -137,9 +142,9 @@ client.on("ready", () => {
   // schedule.scheduleJob(rule, taskToRun);
   // // schedule.scheduleJob(rule1, tasknew);
 
-  // schedule.scheduleJob(rule7AM, taskAt7AM);
-  // schedule.scheduleJob(rule12AM, taskAt12AM);
-  // schedule.scheduleJob(rule5PM, taskAt5PM);
+  schedule.scheduleJob(rule7AM, taskAt7AM);
+  schedule.scheduleJob(rule12AM, taskAt12AM);
+  schedule.scheduleJob(rule5PM, taskAt5PM);
 });
 
 client.on("message", async (msg) => {
